@@ -1,4 +1,7 @@
 
+"use client";
+
+import { useState } from 'react';
 import type { FormField } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +22,12 @@ interface PreviewPanelProps {
 }
 
 export default function PreviewPanel({ title, description, fields }: PreviewPanelProps) {
+  const [fieldValues, setFieldValues] = useState<Record<string, any>>({});
+
+  const handleValueChange = (id: string, value: any) => {
+    setFieldValues(prev => ({...prev, [id]: value}));
+  };
+
   const renderField = (field: FormField) => {
     const { id, type, label, placeholder, required, options } = field;
     const requiredSpan = required ? <span className="text-destructive"> *</span> : null;
@@ -29,13 +38,13 @@ export default function PreviewPanel({ title, description, fields }: PreviewPane
           {label}
           {requiredSpan}
         </Label>
-        {type === 'text' && <Input id={id} placeholder={placeholder} />}
-        {type === 'email' && <Input type="email" id={id} placeholder={placeholder} />}
-        {type === 'number' && <Input type="number" id={id} placeholder={placeholder} />}
-        {type === 'textarea' && <Textarea id={id} placeholder={placeholder} />}
+        {type === 'text' && <Input id={id} placeholder={placeholder} onChange={(e) => handleValueChange(id, e.target.value)} />}
+        {type === 'email' && <Input type="email" id={id} placeholder={placeholder} onChange={(e) => handleValueChange(id, e.target.value)} />}
+        {type === 'number' && <Input type="number" id={id} placeholder={placeholder} onChange={(e) => handleValueChange(id, e.target.value)} />}
+        {type === 'textarea' && <Textarea id={id} placeholder={placeholder} onChange={(e) => handleValueChange(id, e.target.value)} />}
         {type === 'checkbox' && (
           <div className="flex items-center space-x-2 pt-2">
-            <Checkbox id={id} />
+            <Checkbox id={id} onCheckedChange={(checked) => handleValueChange(id, checked)} />
             <label htmlFor={id} className="text-sm font-medium leading-none">
               {placeholder || 'Accept'}
             </label>
@@ -49,19 +58,20 @@ export default function PreviewPanel({ title, description, fields }: PreviewPane
                 className="w-full justify-start text-left font-normal"
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                <span>Pick a date</span>
+                <span>{fieldValues[id] ? format(fieldValues[id], "PPP") : "Pick a date"}</span>
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                disabled
+                selected={fieldValues[id]}
+                onSelect={(date) => handleValueChange(id, date)}
               />
             </PopoverContent>
           </Popover>
         )}
         {type === 'select' && (
-          <Select>
+          <Select onValueChange={(value) => handleValueChange(id, value)}>
             <SelectTrigger>
               <SelectValue placeholder={placeholder || 'Select an option'} />
             </SelectTrigger>
@@ -72,7 +82,7 @@ export default function PreviewPanel({ title, description, fields }: PreviewPane
             </SelectContent>
           </Select>
         )}
-        {type === 'rating' && <Rating readOnly />}
+        {type === 'rating' && <Rating rating={fieldValues[id] || 0} onRatingChange={(rating) => handleValueChange(id, rating)} />}
       </div>
     );
   };
@@ -83,7 +93,7 @@ export default function PreviewPanel({ title, description, fields }: PreviewPane
         <h2 className="text-2xl font-bold">{title}</h2>
         <p className="text-muted-foreground">{description}</p>
       </div>
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
         {fields.map(renderField)}
         {fields.length > 0 && <Button className="w-full" type="submit">Submit</Button>}
       </form>
