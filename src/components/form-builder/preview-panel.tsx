@@ -76,7 +76,7 @@ export default function PreviewPanel({ title, description, fields }: PreviewPane
               <SelectValue placeholder={placeholder || 'Select an option'} />
             </SelectTrigger>
             <SelectContent>
-              {options?.map((option, index) => (
+              {options?.filter(o => o.trim() !== '').map((option, index) => (
                 <SelectItem key={`${option}-${index}`} value={option}>{option}</SelectItem>
               ))}
             </SelectContent>
