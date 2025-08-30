@@ -78,6 +78,7 @@ export default function Home() {
       name: `new_field_${fields.length + 1}`,
       label: 'New Question',
       type: 'text',
+      placeholder: 'Enter your answer',
       required: false,
     };
     setFields([...fields, newField]);

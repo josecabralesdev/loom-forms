@@ -34,7 +34,7 @@ const prompt = ai.definePrompt({
   prompt: `You are an AI assistant that helps users quickly create form structures.
 
   Based on the user's description, generate a JSON structure representing an initial form draft.
-  Include relevant fields and their types (e.g., text, email, number, rating, comments).
+  Include relevant fields, their types (e.g., text, email, number, rating, comments), and a helpful placeholder.
 
   User's description: {{{formDescription}}}
 
@@ -43,10 +43,10 @@ const prompt = ai.definePrompt({
   Example:
   {
     "fields": [
-      { "name": "name", "type": "text", "label": "Name", "required": true },
-      { "name": "email", "type": "email", "label": "Email", "required": true },
-      { "name": "rating", "type": "number", "label": "Rating (1-5)", "required": true },
-      { "name": "comments", "type": "text", "label": "Comments", "required": false }
+      { "name": "name", "type": "text", "label": "Name", "placeholder": "Enter your full name", "required": true },
+      { "name": "email", "type": "email", "label": "Email", "placeholder": "you@example.com", "required": true },
+      { "name": "rating", "type": "number", "label": "Rating (1-5)", "placeholder": "3", "required": true },
+      { "name": "comments", "type": "text", "label": "Comments", "placeholder": "Any additional feedback?", "required": false }
     ]
   }
   `,
