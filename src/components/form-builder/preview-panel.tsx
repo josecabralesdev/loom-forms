@@ -1,3 +1,4 @@
+
 import type { FormField } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -65,8 +66,8 @@ export default function PreviewPanel({ title, description, fields }: PreviewPane
               <SelectValue placeholder={placeholder || 'Select an option'} />
             </SelectTrigger>
             <SelectContent>
-              {options?.map((option) => (
-                <SelectItem key={option} value={option}>{option}</SelectItem>
+              {options?.map((option, index) => (
+                <SelectItem key={`${option}-${index}`} value={option}>{option}</SelectItem>
               ))}
             </SelectContent>
           </Select>
