@@ -76,6 +76,47 @@ body {
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  .theme-default {
+    --background: 250 100% 98%;
+    --foreground: 240 10% 3.9%;
+    --primary: 255 92% 78%;
+    --accent: 235 92% 75%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+  }
+  .theme-forest {
+    --background: 43 33% 96%;
+    --foreground: 43 100% 10%;
+    --primary: 173 58% 39%;
+    --accent: 36 78% 66%;
+    --border: 43 33% 85%;
+    --input: 43 33% 85%;
+  }
+  .theme-ocean {
+    --background: 204 100% 98%;
+    --foreground: 210 39% 15%;
+    --primary: 210 40% 40%;
+    --accent: 196 53% 79%;
+    --border: 210 39% 80%;
+    --input: 210 39% 80%;
+  }
+  .theme-sunset {
+    --background: 27 100% 98%;
+    --foreground: 14 65% 20%;
+    --primary: 14 79% 57%;
+    --accent: 36 78% 66%;
+    --border: 27 60% 85%;
+    --input: 27 60% 85%;
+  }
+  .theme-rose {
+    --background: 337 100% 98%;
+    --foreground: 337 84% 15%;
+    --primary: 337 84% 46%;
+    --accent: 337 100% 63%;
+    --border: 337 84% 85%;
+    --input: 337 84% 85%;
+  }
 }
 
 @layer base {
@@ -84,5 +125,32 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .theme-default .submit-btn,
+  .theme-forest .submit-btn,
+  .theme-ocean .submit-btn,
+  .theme-sunset .submit-btn,
+  .theme-rose .submit-btn {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  .theme-default label,
+  .theme-forest label,
+  .theme-ocean label,
+  .theme-sunset label,
+  .theme-rose label {
+      color: hsl(var(--foreground));
+  }
+  .theme-default input, .theme-default textarea, .theme-default select,
+  .theme-forest input, .theme-forest textarea, .theme-forest select,
+  .theme-ocean input, .theme-ocean textarea, .theme-ocean select,
+  .theme-sunset input, .theme-sunset textarea, .theme-sunset select,
+  .theme-rose input, .theme-rose textarea, .theme-rose select {
+      border-color: hsl(var(--border));
+      background-color: hsl(var(--background));
+      color: hsl(var(--foreground));
   }
 }

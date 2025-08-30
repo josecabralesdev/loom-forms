@@ -88,14 +88,14 @@ export default function PreviewPanel({ title, description, fields }: PreviewPane
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6 rounded-lg bg-background">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold">{title}</h2>
         <p className="text-muted-foreground">{description}</p>
       </div>
       <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
         {fields.map(renderField)}
-        {fields.length > 0 && <Button className="w-full" type="submit">Submit</Button>}
+        {fields.length > 0 && <Button className="w-full submit-btn" type="submit">Submit</Button>}
       </form>
     </div>
   );
